@@ -95,3 +95,7 @@ Tear down: `kubectl delete namespace heart-mlops`.
 | **Logistic Regression** (selected) | **0.905** | 0.847 | 0.885 | 0.839 | 0.929 | 0.969 |
 | Random Forest | 0.899 | 0.830 | 0.885 | 0.839 | 0.929 | 0.949 |
 | Gradient Boosting | 0.884 | 0.818 | 0.902 | 0.867 | 0.929 | 0.960 |
+
+## Demo video
+
+https://drive.google.com/file/d/1WlXAq1oL3a1b55fZwh8xyEHOZH3uWLNT/view?usp=drive_link
