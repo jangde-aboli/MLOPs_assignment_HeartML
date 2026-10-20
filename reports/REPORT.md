@@ -180,6 +180,8 @@ To view the runs: `mlflow ui --backend-store-uri sqlite:///mlflow.db` → <http:
 
 ![MLflow run detail](../screenshots/mlflow_run_detail.png)
 
+![MLflow model registry](../screenshots/mlflow_registry.png)
+
 # 6. Packaging and reproducibility
 
 * **Model format:** `models/heart_model.joblib` holds the complete preprocessing and model
@@ -283,7 +285,9 @@ python scripts/smoke_test.py --url http://127.0.0.1
 
 ![kubectl get pods,svc](../screenshots/k8s_pods_services.png)
 
-![Prediction through the LoadBalancer](../screenshots/k8s_predict.png)
+![Docker Desktop Kubernetes view (namespace heart-mlops)](../screenshots/docker_desktop_k8s.png)
+
+![Smoke test through the LoadBalancer, followed by the pods' JSON request logs](../screenshots/k8s_predict.png)
 
 # 10. Monitoring and logging
 
@@ -314,11 +318,12 @@ status. Running `scripts/smoke_test.py --load 300` generates traffic, including 
 requests, so the error-rate panel has data. For local work, `docker compose up` starts the
 same stack without Kubernetes.
 
-![Grafana dashboard](../screenshots/grafana_dashboard.png)
+![Grafana dashboard: status, throughput and latency](../screenshots/grafana_dashboard.png)
+
+![Grafana dashboard: class mix, probability distribution and response codes](../screenshots/grafana_dashboard_2.png)
 
 ![Prometheus targets](../screenshots/prometheus_targets.png)
 
-![Structured API logs](../screenshots/api_logs.png)
 
 # 11. Limitations and next steps
 
