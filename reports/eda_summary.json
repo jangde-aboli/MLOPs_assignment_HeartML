@@ -1,0 +1,34 @@
+{
+  "raw_rows": 303,
+  "clean_rows": 303,
+  "missing_in_raw": {
+    "ca": 4,
+    "thal": 2
+  },
+  "class_counts": {
+    "No disease": 164,
+    "Disease": 139
+  },
+  "target_correlation": {
+    "thal": 0.526,
+    "ca": 0.46,
+    "exang": 0.432,
+    "oldpeak": 0.425,
+    "thalach": -0.417,
+    "cp": 0.414,
+    "slope": 0.339,
+    "sex": 0.277,
+    "age": 0.223,
+    "restecg": 0.169,
+    "trestbps": 0.151,
+    "chol": 0.085,
+    "fbs": 0.025
+  },
+  "figures": [
+    "class_balance.png",
+    "numeric_histograms.png",
+    "categorical_disease_rate.png",
+    "correlation_heatmap.png",
+    "numeric_boxplots.png"
+  ]
+}

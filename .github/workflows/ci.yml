@@ -1,0 +1,112 @@
+name: ci-cd
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+env:
+  PYTHON_VERSION: "3.12"
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install flake8==7.4.1
+      - name: flake8
+        run: flake8 heartml api tests scripts --count --show-source --statistics
+
+  test:
+    needs: lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: pytest
+        run: pytest -v --junitxml=test-results/junit.xml
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: test-results
+          path: test-results/
+
+  train:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+          cache: pip
+      - run: pip install -r requirements.txt
+      - name: Download data
+        run: python scripts/download_data.py
+      - name: EDA
+        run: python -m heartml.eda
+      - name: Train and track with MLflow
+        shell: bash  # explicit bash enables pipefail, so a failed train fails the job
+        run: python -m heartml.train 2>&1 | tee train_log.txt
+      - name: Check model quality gate
+        run: |
+          python - <<'EOF'
+          import json, sys
+          m = json.load(open("models/model_meta.json"))["metrics"]
+          print(json.dumps(m, indent=2))
+          if m["cv_roc_auc_mean"] < 0.85:
+              sys.exit(f"cv ROC-AUC {m['cv_roc_auc_mean']} below 0.85 gate")
+          EOF
+      - uses: actions/upload-artifact@v4
+        with:
+          name: model
+          path: models/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: training-reports
+          path: |
+            reports/
+            train_log.txt
+            data/processed/heart_clean.csv
+      - uses: actions/upload-artifact@v4
+        with:
+          name: mlflow-tracking
+          path: |
+            mlflow.db
+            mlruns/
+
+  docker:
+    needs: train
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/download-artifact@v4
+        with:
+          name: model
+          path: models/
+      - name: Build image
+        run: docker build -t heart-api:${{ github.sha }} .
+      - name: Run container
+        run: docker run -d --name heart-api -p 8000:8000 heart-api:${{ github.sha }}
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ env.PYTHON_VERSION }}
+      - run: pip install requests==2.34.2
+      - name: Smoke test container
+        run: python scripts/smoke_test.py --url http://localhost:8000 --wait 60
+      - name: Container logs
+        if: always()
+        run: docker logs heart-api | tee container.log
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: container-logs
+          path: container.log

@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+test-results/
+logs/
+mlartifacts/
+# Raw download is reproducible via scripts/download_data.py; the cleaned CSV is committed.
+data/raw/
+
+# Course handout (not part of the project)
+MLOps Assignment*.pdf

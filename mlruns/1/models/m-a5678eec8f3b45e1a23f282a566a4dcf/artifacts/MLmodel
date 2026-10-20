@@ -1,0 +1,45 @@
+artifact_path: file:C:/Users/Aboli/Documents/MLops assignment/mlruns/1/models/m-a5678eec8f3b45e1a23f282a566a4dcf/artifacts
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.skops
+    predict_fn: predict
+    python_version: 3.14.6
+  sklearn:
+    code: null
+    pickled_model: model.skops
+    serialization_format: skops
+    sklearn_version: 1.9.1
+    skops_trusted_types:
+    - numpy.dtype
+    - sklearn.tree._tree.Tree
+is_signature_from_type_hint: false
+mlflow_version: 3.17.1
+model_id: m-a5678eec8f3b45e1a23f282a566a4dcf
+model_size_bytes: 3460286
+model_uuid: m-a5678eec8f3b45e1a23f282a566a4dcf
+prompts: null
+run_id: b560eaf8ffd14173b9009cc2e137161e
+saved_input_example_info:
+  artifact_path: input_example.json
+  pandas_orient: split
+  serving_input_path: serving_input_example.json
+  type: dataframe
+signature:
+  inputs: '[{"type": "long", "name": "age", "required": true}, {"type": "double",
+    "name": "trestbps", "required": true}, {"type": "double", "name": "chol", "required":
+    true}, {"type": "long", "name": "thalach", "required": true}, {"type": "double",
+    "name": "oldpeak", "required": true}, {"type": "long", "name": "sex", "required":
+    true}, {"type": "long", "name": "fbs", "required": true}, {"type": "long", "name":
+    "exang", "required": true}, {"type": "long", "name": "cp", "required": true},
+    {"type": "long", "name": "restecg", "required": true}, {"type": "long", "name":
+    "slope", "required": true}, {"type": "double", "name": "ca", "required": false},
+    {"type": "double", "name": "thal", "required": false}]'
+  outputs: '[{"type": "tensor", "tensor-spec": {"dtype": "float64", "shape": [-1,
+    2]}}]'
+  params: null
+type_hint_from_example: false
+utc_time_created: '2026-10-20 14:30:57.927083'
