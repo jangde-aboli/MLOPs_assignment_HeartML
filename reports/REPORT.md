@@ -7,7 +7,7 @@ date: "October 2026"
 
 **Code repository:** <https://github.com/jangde-aboli/MLOPs_assignment_HeartML>
 
-**Demo video:** <link to recording>
+**Demo video:** submitted alongside this report (pipeline_demo.mp4)
 
 # 1. Overview
 
