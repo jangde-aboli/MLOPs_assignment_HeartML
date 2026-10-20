@@ -1,7 +1,7 @@
 ---
 title: "Heart Disease Risk Prediction: End-to-End MLOps Pipeline"
 subtitle: "MLOps (AIMLCZG523), Assignment 01"
-author: "<Your name> (<BITS ID>)"
+author: "Aboli Shantinath Jangde (2025AE05702)"
 date: "October 2026"
 ---
 
